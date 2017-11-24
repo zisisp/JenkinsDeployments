@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "deploy.light.server",
+      "type": "java.lang.String",
+      "description": "Description for deploy.light.server."
+  }
+] }
