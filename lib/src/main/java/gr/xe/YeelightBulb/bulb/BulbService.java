@@ -62,10 +62,10 @@ public class BulbService {
      */
     public void deployment() throws InterruptedException {
         String deploymentSequence =
-                "1000,1," + getRGBValue(BLUE.toColor()) + ",100," +
-                "1000,1," + getRGBValue(GREEN.toColor()) + ",100," +
-                "1000,1," + getRGBValue(RED.toColor()) + ",100";
-        sendYeelightCommand(config.location(), START_CF, new Object[]{0, 0, deploymentSequence});
+                "1000,1," + getRGBValue(Color.BLUE) + ",100," +
+                "1000,1," + getRGBValue(Color.GREEN) + ",100," +
+                "1000,1," + getRGBValue(Color.MAGENTA) + ",100";
+        sendYeelightCommand(config.location(), START_CF, new Object[]{0, 2, deploymentSequence});
     }
 
     public void success() {
@@ -205,7 +205,7 @@ public class BulbService {
         return sendYeelightCommand(location, SET_POWER, new Object[]{param, "", 0});
     }
 
-    private String sendYeelightCommand(String location, String action, Object[] params) {
+    public String sendYeelightCommand(String location, String action, Object[] params) {
         int index = location.indexOf(":");
         Socket clientSocket = null;
         try {

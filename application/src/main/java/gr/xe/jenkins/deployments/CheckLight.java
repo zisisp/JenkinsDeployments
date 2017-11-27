@@ -14,6 +14,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created with IntelliJ IDEA.
@@ -47,11 +48,20 @@ public class CheckLight {
     @Scheduled(fixedRate = 1000)
     public void checkJobs() throws IOException {
         ResponseEntity<String> response = getjenkinsResponse(JENKINS_URL + "/api/json");
-        bulbService.updateStatus();
         getRunningJobs(response);
         for (String runningJob : jobMap.keySet()) {
             checkJob(runningJob);
         }
+        removeIdleJobs();
+        bulbService.updateStatus(jobMap.size());
+    }
+
+    private void removeIdleJobs() {
+        jobMap=jobMap
+                .entrySet()
+                .stream()
+                .filter(e->e.getValue()!=DeployStatus.idle)
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
     private void getRunningJobs(ResponseEntity<String> response) throws IOException {
@@ -104,7 +114,7 @@ public class CheckLight {
             handleAction(deployStatus, jobName);
         }
         if (deployStatus != DeployStatus.deploy&& deployStatus != DeployStatus.deploy_initiated) {
-            jobMap.remove(jobName);
+            jobMap.put(jobName,DeployStatus.idle);
         }
     }
 

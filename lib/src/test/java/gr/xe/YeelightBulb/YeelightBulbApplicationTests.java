@@ -13,7 +13,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest("yeelight.port=123")
+@SpringBootTest({"yeelight.port=123","yeelight.ip=123.123.123.123"})
 public class YeelightBulbApplicationTests {
     @Autowired
     private YeelightBindingConfig yeelightBindingConfig;
@@ -22,7 +22,7 @@ public class YeelightBulbApplicationTests {
     public void contextLoads() {
         System.out.println("yeelightBindingConfig.location() = " + yeelightBindingConfig.location());
         assertThat(yeelightBindingConfig.location()).isNotNull();
-        assertThat(yeelightBindingConfig.location()).contains("null:123");
+        assertThat(yeelightBindingConfig.location()).contains("123.123.123.123:123");
     }
 
     @SpringBootApplication

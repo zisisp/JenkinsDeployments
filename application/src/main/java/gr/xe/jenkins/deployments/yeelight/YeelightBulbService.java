@@ -62,8 +62,11 @@ public class YeelightBulbService {
         }
     }
 
-    public void updateStatus() {
-        if (lastStatus.getStatus()!=null&&lastStatus.getStatus() != DeployStatus.idle) {
+    public void updateStatus(int jobMap) {
+        boolean statusHasChanedAtLeastOnce = lastStatus.getStatus() != null;
+        boolean statusIsNotIdle = lastStatus.getStatus() != DeployStatus.idle;
+        boolean noJobsRunning=jobMap==0;
+        if (statusHasChanedAtLeastOnce && statusIsNotIdle&&noJobsRunning) {
             if (shouldResetStatus(lastStatus.getLastUpdate())) {
                 lastStatus=new State(DeployStatus.idle, new Date());
                 bulbService.reset();
