@@ -32,7 +32,7 @@ class SampleDataCLR implements CommandLineRunner {
 
 	@Override
 	public void run(String... strings) throws Exception {
-//		bulbService.sendYeelightCommand(yeelightBindingConfig.location(),"set_power",new Object[]{"off","smooth",500} );
+		bulbService.sendYeelightCommand(yeelightBindingConfig.location(),"set_power",new Object[]{"off","smooth",500} );
 //		Thread.sleep(1000);
 //		bulbService.sendYeelightCommand(yeelightBindingConfig.location(),"set_power",new Object[]{"on","smooth",500} );
 //		Thread.sleep(1000);

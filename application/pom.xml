@@ -12,10 +12,10 @@
     <description>Demo project for Spring Boot</description>
 
     <!--<parent>-->
-        <!--<groupId>org.springframework.boot</groupId>-->
-        <!--<artifactId>spring-boot-starter-parent</artifactId>-->
-        <!--<version>1.5.8.RELEASE</version>-->
-        <!--<relativePath/> &lt;!&ndash; lookup parent from repository &ndash;&gt;-->
+    <!--<groupId>org.springframework.boot</groupId>-->
+    <!--<artifactId>spring-boot-starter-parent</artifactId>-->
+    <!--<version>1.5.8.RELEASE</version>-->
+    <!--<relativePath/> &lt;!&ndash; lookup parent from repository &ndash;&gt;-->
     <!--</parent>-->
     <parent>
         <groupId>gr.xe</groupId>
@@ -60,6 +60,11 @@
         <dependency>
             <groupId>gr.xe</groupId>
             <artifactId>YeelightBulbLib</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>gr.xe</groupId>
+            <artifactId>LegacyUtils</artifactId>
+            <version>1.10.0</version>
         </dependency>
     </dependencies>
 

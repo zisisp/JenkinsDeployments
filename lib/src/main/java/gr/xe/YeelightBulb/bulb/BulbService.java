@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.awt.*;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -76,8 +77,17 @@ public class BulbService {
         internalReceiveCommand(config.location(), RED, SET_RGB);
     }
 
+    @PostConstruct
     public void reset() {
         internalReceiveCommand(config.location(), WHITE, SET_RGB);
+    }
+
+    public void switchOff() {
+        sendYeelightCommand(config.location(),"set_power",new Object[]{"off","smooth",500} );
+    }
+
+    public void switchOn() {
+        sendYeelightCommand(config.location(),"set_power",new Object[]{"on","smooth",500} );
     }
 
     private void processYeelightResult(YeelightGetPropsResponse result, String action, String itemName) {
@@ -268,6 +278,4 @@ public class BulbService {
         }
         return builder.toString();
     }
-
-
 }
