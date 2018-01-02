@@ -2,12 +2,11 @@ package gr.xe.jenkins.deployments.yeelight;
 
 import gr.xe.YeelightBulb.bulb.BulbService;
 import gr.xe.jenkins.deployments.DeployStatus;
+import java.time.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -28,7 +27,7 @@ public class YeelightBulbService {
     private static int SECONDS_TO_WAIT = 60;
     private static int STARTING_HOUR = 8;
     private static int STARTING_MINUTE = 30;
-    private static int ENDING_MINUTE = 0;
+    private static int ENDING_MINUTE = 15;
     private static int ENDING_HOUR = 18;
     private static boolean isLightOn;
     private static boolean serverJustStarted=true;
@@ -103,7 +102,14 @@ public class YeelightBulbService {
         LocalDateTime start=now.atTime(STARTING_HOUR,STARTING_MINUTE);
         LocalDateTime end=now.atTime(ENDING_HOUR,ENDING_MINUTE);
         LocalDateTime nowTime=LocalDateTime.now();
-        return nowTime.isAfter(end)||nowTime.isBefore(start);
+        return nowTime.isAfter(end)||nowTime.isBefore(start)||shouldBeClosed();
+    }
+
+    private boolean shouldBeClosed() {
+        LocalDate now=LocalDate.now();
+        boolean isSaturday = now.getDayOfWeek() == DayOfWeek.SATURDAY;
+        boolean isSunday= now.getDayOfWeek() == DayOfWeek.SUNDAY;
+        return isSaturday||isSunday;
     }
 
     /**
