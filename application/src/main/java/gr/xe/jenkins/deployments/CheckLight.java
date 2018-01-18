@@ -1,20 +1,18 @@
 package gr.xe.jenkins.deployments;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jayway.jsonpath.JsonPath;
-import gr.xe.jenkins.deployments.yeelight.YeelightBulbService;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.*;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.client.RestTemplate;
-
-import java.io.IOException;
+import com.fasterxml.jackson.core.type.*;
+import com.fasterxml.jackson.databind.*;
+import com.jayway.jsonpath.*;
+import gr.xe.jenkins.deployments.yeelight.*;
+import java.io.*;
 import java.util.*;
-import java.util.stream.Collectors;
+import java.util.stream.*;
+import org.springframework.beans.factory.annotation.*;
+import org.springframework.http.*;
+import org.springframework.scheduling.annotation.*;
+import org.springframework.stereotype.*;
+import org.springframework.util.*;
+import org.springframework.web.client.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -35,6 +33,8 @@ public class CheckLight {
     private String JENKINS_URL = "http://jenkins.in.xe.gr";
     @Value("${oauth.token}")
     private String OAUTH_TOKEN = "enBvbnRpa2FzOjkwYWUxMTU3ZWI2NDFkZTc0NmNkYWM4YjAzNDIzMDJk";
+    @Value("${slack.webhook}")
+    private String slackWebhook;
     private Map<String, DeployStatus> jobMap = new LinkedHashMap<>();
     private static DeployStatus lastStatusSend;
 
@@ -71,7 +71,7 @@ public class CheckLight {
         List<Jobs> job = objectMapper.convertValue(jobsPat2, typeReference);
         job.stream()
                 .filter(j -> j.getColor().endsWith("_anime") && jobMap.entrySet().stream()
-                        .filter(e -> j.getName().equals(e.getKey())).count() == 0)
+                        .noneMatch(e -> j.getName().equals(e.getKey())))
                 .forEach(j -> jobMap.put(j.getName(), DeployStatus.deploy_initiated));
     }
 
@@ -124,6 +124,21 @@ public class CheckLight {
         lastStatusSend=action;
         sendBulbAction(action);
         sendLightAction(action);
+        sendSlackAction(action,jobName);
+    }
+
+    private void sendSlackAction(DeployStatus action, String jobName) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+        boolean isStaging = jobName.contains("stg") || jobName.contains("staging");
+        String prefix = !isStaging ? "*Production deploy job:*" : "";
+        String subject = prefix + "`" + jobName + "`";
+        String text = subject;
+        text += "Job Result:`" + action.name()+"`";
+        map.add("payload", "{'text':'" + text + "'}");
+        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(map, headers);
+        ResponseEntity<String> response = new RestTemplate().postForEntity(slackWebhook, request, String.class);
     }
 
     private void sendBulbAction(DeployStatus action) {

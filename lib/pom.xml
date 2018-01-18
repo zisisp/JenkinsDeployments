@@ -76,5 +76,18 @@
 		</plugins>
 	</build>
 
+	<distributionManagement>
+		<repository>
+			<id>xe-nexus</id>
+			<name>xe-releases</name>
+			<url>http://nexus.in.xe.gr/content/repositories/releases</url>
+		</repository>
+		<snapshotRepository>
+			<id>xe-nexus</id>
+			<name>xe-snapshots</name>
+			<url>http://nexus.in.xe.gr/content/repositories/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
+
 
 </project>
