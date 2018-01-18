@@ -136,7 +136,8 @@ public class CheckLight {
         String subject = prefix + "`" + jobName + "`";
         String text = subject;
         text += "Job Result:`" + action.name()+"`";
-        map.add("payload", "{'text':'" + text + "'}");
+
+        map.add("payload", "{'text':'" + text + "','channel':'#jenkins_jobs'}");
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(map, headers);
         ResponseEntity<String> response = new RestTemplate().postForEntity(slackWebhook, request, String.class);
     }
