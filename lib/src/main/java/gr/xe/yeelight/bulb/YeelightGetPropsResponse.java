@@ -1,4 +1,4 @@
-package gr.xe.YeelightBulb.bulb;
+package gr.xe.yeelight.bulb;
 
 import java.util.List;
 

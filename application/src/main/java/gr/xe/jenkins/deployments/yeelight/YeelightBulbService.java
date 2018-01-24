@@ -1,6 +1,6 @@
 package gr.xe.jenkins.deployments.yeelight;
 
-import gr.xe.YeelightBulb.bulb.BulbService;
+import gr.xe.yeelight.bulb.BulbService;
 import gr.xe.jenkins.deployments.DeployStatus;
 import java.time.*;
 import org.slf4j.Logger;

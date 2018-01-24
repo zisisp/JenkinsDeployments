@@ -1,4 +1,4 @@
-package gr.xe.YeelightBulb.configuration;
+package gr.xe.yeelight.configuration;
 
 import org.springframework.stereotype.Component;
 

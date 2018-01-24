@@ -1,4 +1,4 @@
-package gr.xe.YeelightBulb.types;
+package gr.xe.yeelight.types;
 
 /**
  * Created with IntelliJ IDEA.

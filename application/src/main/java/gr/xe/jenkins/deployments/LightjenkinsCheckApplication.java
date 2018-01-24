@@ -1,6 +1,6 @@
 package gr.xe.jenkins.deployments;
 
-import gr.xe.YeelightBulb.configuration.LightConfiguration;
+import gr.xe.yeelight.configuration.LightConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;

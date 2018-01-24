@@ -1,6 +1,6 @@
-package gr.xe.YeelightBulb.configuration;
+package gr.xe.yeelight.configuration;
 
-import gr.xe.YeelightBulb.bulb.BulbService;
+import gr.xe.yeelight.bulb.BulbService;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

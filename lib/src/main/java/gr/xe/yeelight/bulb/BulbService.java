@@ -1,7 +1,7 @@
-package gr.xe.YeelightBulb.bulb;
+package gr.xe.yeelight.bulb;
 
-import gr.xe.YeelightBulb.configuration.YeelightBindingConfig;
-import gr.xe.YeelightBulb.types.*;
+import gr.xe.yeelight.configuration.YeelightBindingConfig;
+import gr.xe.yeelight.types.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -16,7 +16,7 @@ import java.net.NoRouteToHostException;
 import java.net.Socket;
 import java.util.HashMap;
 
-import static gr.xe.YeelightBulb.types.HSBType.*;
+import static gr.xe.yeelight.types.HSBType.*;
 
 /**
  * Created with IntelliJ IDEA.
